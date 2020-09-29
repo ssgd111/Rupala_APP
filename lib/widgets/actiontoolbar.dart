@@ -5,12 +5,12 @@ import 'package:wallpaper_manager/wallpaper_manager.dart';
 import 'package:like_button/like_button.dart';
 import 'package:http/http.dart' as http;
 import 'package:esys_flutter_share/esys_flutter_share.dart';
-import 'dart:math';
+//import 'dart:math';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:flutter_cache_manager/flutter_cache_manager.dart';
-import 'package:dio/dio.dart';
-import 'package:file_utils/file_utils.dart';
-import 'package:path_provider/path_provider.dart';
+//import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+//import 'package:dio/dio.dart';
+//import 'package:file_utils/file_utils.dart';
+//import 'package:path_provider/path_provider.dart';
 import 'package:flutter/services.dart';
 
 
