@@ -19,6 +19,7 @@ class _ProfileState extends State<Profile> {
   var _darkTheme = true;
 
   @override
+
   Widget build(BuildContext context) {
     final themeNotifier = Provider.of<ThemeNotifier>(context);
     _darkTheme = (themeNotifier.getTheme() == darkTheme);
@@ -64,9 +65,8 @@ class _ProfileState extends State<Profile> {
            // color: Colors.yellow,
           ),
           Container(
-            height: MediaQuery.of(context).size.height / 1.78,
+            height: MediaQuery.of(context).size.height / 1.9,
             width: MediaQuery.of(context).size.width,
-           // color: Colors.black,
             child: ListView(
               scrollDirection: Axis.vertical,
               children: <Widget>[
@@ -276,6 +276,12 @@ class _ProfileState extends State<Profile> {
                   title: Text("Donate"),
                 ),
 
+                ListTile(
+                  leading:Icon(FontAwesome5.calendar),
+                  title: Text("Calender"),
+                ),
+
+
               ],
             ),
           ),
@@ -291,3 +297,6 @@ class _ProfileState extends State<Profile> {
   }
 
 }
+
+
+

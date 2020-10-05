@@ -72,6 +72,7 @@ class _ActiontoolbarState extends State<Actiontoolbar> {
         ),
 
         GestureDetector(
+
            onTap:() async{
              var status = await Permission.storage.status;
              if(status.isGranted){

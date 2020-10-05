@@ -21,7 +21,7 @@ class _DarshanState extends State<Darshan>  {
           initialPage: 0,
           //   viewportFraction:0,
         ),
-        onPageChanged:(index) {
+        onPageChanged:(index){
           index = index % (Photos.item.length);
         },
         scrollDirection: Axis.vertical,
