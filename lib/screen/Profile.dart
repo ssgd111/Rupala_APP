@@ -1,32 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:fluttericon/font_awesome5_icons.dart';
 import 'package:fluttericon/font_awesome_icons.dart';
-import 'package:rupala/widgets/themenotifier.dart';
-import 'package:rupala/widgets/theme.dart';
-import 'package:day_night_switch/day_night_switch.dart';
+import 'package:rupala/screen/myQr.dart';
+import 'package:rupala/screen/resetpin.dart';
+import 'package:rupala/screen/withdraw.dart';
 import 'package:flutter/widgets.dart';
-import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'settingpage.dart';
+import 'login_request.dart';
 
 
-class Profile extends StatefulWidget {
+class Profile extends StatefulWidget{
   @override
   _ProfileState createState() => _ProfileState();
 }
 
 class _ProfileState extends State<Profile> {
 
-  var _darkTheme = true;
 
   @override
+  Widget build(BuildContext context){
 
-  Widget build(BuildContext context) {
-    final themeNotifier = Provider.of<ThemeNotifier>(context);
-    _darkTheme = (themeNotifier.getTheme() == darkTheme);
     return Scaffold(
       appBar: AppBar(
-        excludeHeaderSemantics: true,
-       // backgroundColor: Colors.black,
+        actions: [
+          Padding(
+            padding: EdgeInsets.only(right: MediaQuery.of(context).size.width/30),
+            child:GestureDetector(
+              onTap: (){
+                Navigator.push(context,MaterialPageRoute(builder:(context)=>SettingPage()));
+              },
+              child:Icon(Icons.settings,size: 30),
+            ),
+          ),
+        ],
         backgroundColor: Theme.of(context).appBarTheme.color,
         title: Text("Profile",style:TextStyle(
             color: Theme.of(context).textTheme.bodyText1.color,
@@ -35,37 +41,64 @@ class _ProfileState extends State<Profile> {
       body: Column(
         children: <Widget>[
           Container(
-            height: MediaQuery.of(context).size.height/4,
-            //color: Colors.white,
+            height: MediaQuery.of(context).size.height/3.5,
             width: MediaQuery.of(context).size.width,
-            child:ListView(
-              children: <Widget>[
-                ListTile(
-                  contentPadding: const EdgeInsets.only(left: 16.0),
-                  trailing: Transform.scale(
-                    scale: 0.4,
-                    child: DayNightSwitch(
-                      value: _darkTheme,
-                      moonImage: AssetImage("assets/Moon1.png"),
-                      sunImage: AssetImage("assets/Sun2.png"),
-                      onChanged: (val) {
-                        setState(() {
-                          _darkTheme = val;
-                        });
-                        onThemeChanged(val,themeNotifier);
-                      },
-                    ),
+            child: Center(
+              child:GestureDetector(
+                onTap: (){
+                  Navigator.push(context,MaterialPageRoute(builder: (context)=>LoginRequest()));
+                },
+               child: Container(
+                  width: 200,
+                  height: 100,
+                  child:Center(
+                    child: Text("Login Request",style: TextStyle(fontSize: 25),),
                   ),
-                )
-              ],
+                  decoration: BoxDecoration(
+                      shape: BoxShape.rectangle,
+                      borderRadius: BorderRadius.circular(30),
+                      boxShadow: [
+                        BoxShadow(
+                          //color: Colors.pink,
+                            offset: Offset(4.0, 4.0),
+                            blurRadius: 15.0,
+                            spreadRadius: 1.0),
+                        BoxShadow(
+                          //color: Colors.green,
+                          offset: Offset(-4.0,-4.0),
+                          blurRadius: 15.0,
+                          spreadRadius: 1.0,
+                        ),
+                      ],
+                      gradient: LinearGradient(
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                          colors:[
+                            Colors.grey[200],
+                            Colors.grey[300],
+                            Colors.grey[400],
+                            Colors.grey[500],
+                          ],
+                          stops:[
+                            0.1,
+                            0.5,
+                            0.8,
+                            1
+                          ]
+                      ),
+                  ),
+                ),
+              ),
             ),
           ),
+
           Divider(
             thickness: 1,
-           // color: Colors.yellow,
+           color: Colors.red,
           ),
+
           Container(
-            height: MediaQuery.of(context).size.height / 1.9,
+            height: MediaQuery.of(context).size.height / 2.1,
             width: MediaQuery.of(context).size.width,
             child: ListView(
               scrollDirection: Axis.vertical,
@@ -226,10 +259,16 @@ class _ProfileState extends State<Profile> {
                   ),
                 ),*/
 
-            ListTile(
-                    leading:Icon(FontAwesome5.qrcode),
-                    title: Text("My QR"),
+               GestureDetector(
+                 onTap: (){
+                   Navigator.push(context,MaterialPageRoute(builder:(context)=>MyQr()));
+                 },
+                 child:ListTile(
+                   leading:Icon(FontAwesome5.qrcode),
+                   title: Text("My QR"),
                  ),
+               ),
+
 
                 ListTile(
                   leading:Icon(FontAwesome5.address_book),
@@ -252,33 +291,50 @@ class _ProfileState extends State<Profile> {
                 ),
 
                 ListTile(
-                  leading:Icon(FontAwesome5.table),
+                  leading: Icon(FontAwesome5.user),
+                  title: Text("Take Attendance"),
+                ),
+
+
+                ListTile(
+                  leading: Icon(FontAwesome5.table),
                   title: Text("Event Attendance"),
                 ),
 
-                ListTile(
-                  leading:Icon(FontAwesome.edit),
-                  title: Text("Pin Reset"),
+                GestureDetector(
+                  onTap:(){
+                        Navigator.push(context,MaterialPageRoute(builder:(context)=>ResetPin()));
+                     },
+                     child:ListTile(
+                     leading:Icon(FontAwesome.edit),
+                     title:Text("Pin Reset"),
+                  ),
+                ),
+
+                GestureDetector(
+                  onTap:(){
+                      Navigator.push(context,MaterialPageRoute(builder:(context)=>Withdraw()));
+                  },
+
+                  child:ListTile(
+                    leading:Icon(FontAwesome5.credit_card),
+                    title:Text("Withdraw"),
+                  ),
                 ),
 
                 ListTile(
-                  leading:Icon(FontAwesome5.credit_card),
-                  title: Text("Withdraw"),
+                       leading:Icon(FontAwesome5.rupee_sign),
+                       title: Text("Pay Fee"),
                 ),
 
                 ListTile(
-                  leading:Icon(FontAwesome5.rupee_sign),
-                  title: Text("Pay Fee"),
+                     leading:Icon(FontAwesome5.envelope),
+                     title: Text("Donate"),
                 ),
 
                 ListTile(
-                  leading:Icon(FontAwesome5.envelope),
-                  title: Text("Donate"),
-                ),
-
-                ListTile(
-                  leading:Icon(FontAwesome5.calendar),
-                  title: Text("Calender"),
+                     leading:Icon(FontAwesome5.calendar),
+                     title: Text("Calender"),
                 ),
 
 
@@ -290,11 +346,7 @@ class _ProfileState extends State<Profile> {
     );
   }
 
-  void onThemeChanged(bool value, ThemeNotifier themeNotifier) async {
-    (value) ? themeNotifier.setTheme(darkTheme) : themeNotifier.setTheme(lightTheme);
-    var prefs = await SharedPreferences.getInstance();
-    prefs.setBool('darkMode', value);
-  }
+
 
 }
 

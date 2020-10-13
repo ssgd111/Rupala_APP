@@ -94,7 +94,7 @@ class _MemberLoginState extends State<MemberLogin> {
                         padding: EdgeInsets.only(
                           top: MediaQuery.of(context).size.height / 3.9,
                         ),
-                        child: Row(
+                        child:Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
@@ -139,11 +139,6 @@ class _MemberLoginState extends State<MemberLogin> {
                   ],
                 ),
 
-
-
-
-
-
                 SizedBox(
                   height: MediaQuery.of(context).size.height / 50,
                 ),
@@ -179,7 +174,6 @@ class _MemberLoginState extends State<MemberLogin> {
                         color: Colors.pink,
                       ),
                     ),
-
                   ],
                 ),
 

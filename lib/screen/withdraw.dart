@@ -42,7 +42,7 @@ class _WithdrawState extends State<Withdraw>{
                   padding: EdgeInsets.only(left:MediaQuery.of(context).size.width/30),
                   width: MediaQuery.of(context).size.width/1.2,
                   decoration:BoxDecoration(
-                    color: Colors.tealAccent,
+                    //color: Colors.tealAccent,
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: DropdownButton<String>(
@@ -79,7 +79,7 @@ class _WithdrawState extends State<Withdraw>{
                 Container(
                   padding: EdgeInsets.only(left:MediaQuery.of(context).size.width/30),
                   decoration:BoxDecoration(
-                    color: Colors.tealAccent,
+                   // color: Colors.tealAccent,
                     borderRadius: BorderRadius.circular(10),
                   ),
                   width: MediaQuery.of(context).size.width/1.2,
@@ -116,7 +116,7 @@ class _WithdrawState extends State<Withdraw>{
                 Container(
                   padding: EdgeInsets.only(left:MediaQuery.of(context).size.width/30),
                   decoration:BoxDecoration(
-                    color: Colors.tealAccent,
+                   // color: Colors.tealAccent,
                     borderRadius: BorderRadius.circular(10),
                   ),
                   width: MediaQuery.of(context).size.width/1.2,
@@ -235,7 +235,7 @@ class _WithdrawState extends State<Withdraw>{
                           Container(
                             padding:EdgeInsets.only(left:MediaQuery.of(context).size.width/30),
                             decoration:BoxDecoration(
-                              color: Colors.tealAccent,
+                            //  color: Colors.tealAccent,
                               borderRadius: BorderRadius.circular(10),
                             ),
                             width: MediaQuery.of(context).size.width/1,
@@ -247,7 +247,7 @@ class _WithdrawState extends State<Withdraw>{
                               iconSize:24,
                               elevation:16,
                               style: TextStyle(color: Colors.deepPurple),
-                              onChanged:(String newValue) {
+                              onChanged:(String newValue){
                                 setState((){
                                    dropdownValue4 = newValue;
                                  }

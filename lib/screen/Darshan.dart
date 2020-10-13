@@ -37,16 +37,34 @@ class _DarshanState extends State<Darshan>  {
     return Stack(
       children:<Widget>[
         Container(
-          //Image.network(image,fit:Boxfit.cover)
-          child:PhotoView(
-                     customSize: MediaQuery.of(context).size,
-                     imageProvider:NetworkImage(image,),
-                     minScale: PhotoViewComputedScale.contained*0.8,
-                     maxScale: PhotoViewComputedScale.covered*10,
-                     initialScale: PhotoViewComputedScale.covered,
-                   ),
-                     height: MediaQuery.of(context).size.height,
-             width: MediaQuery.of(context).size.width,),
+          child:Image.network(
+            image,
+            fit:BoxFit.cover,
+            errorBuilder:(context,error,stackTrace){
+              if(error!=null && context!=null){
+                return Container(child:Center(child:Text("No Internet")),);
+              }
+              return null;
+            },
+            loadingBuilder:(BuildContext context,Widget child,ImageChunkEvent loadingProgress){
+              if(loadingProgress == null)
+                return child;
+              return Container(child:Center(child: CircularProgressIndicator(strokeWidth: 3.0,)),);
+            },
+          ),
+
+                          /*PhotoView(
+                           customSize:MediaQuery.of(context).size,
+                           imageProvider:NetworkImage(image),
+                           minScale:PhotoViewComputedScale.contained*0.8,
+                           maxScale:PhotoViewComputedScale.covered*10,
+                           initialScale:PhotoViewComputedScale.covered,
+                         ),*/
+                     
+                     height:MediaQuery.of(context).size.height,
+                     width:MediaQuery.of(context).size.width,
+        ),
+
         Positioned(
           right:MediaQuery.of(context).size.width/40,
           bottom:MediaQuery.of(context).size.height/25,
@@ -54,6 +72,7 @@ class _DarshanState extends State<Darshan>  {
             child:Actiontoolbar(image1: image,),
           ),
         ),
+
         Positioned(
           bottom:MediaQuery.of(context).size.height/25,
           left: MediaQuery.of(context).size.width/20,
@@ -61,10 +80,10 @@ class _DarshanState extends State<Darshan>  {
             child:Description(),
           ),
         ),
+
       ],
     );
   }
-
   @override
   Widget build(BuildContext context){
     return Scaffold(

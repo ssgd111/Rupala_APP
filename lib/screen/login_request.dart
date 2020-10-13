@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:image_cropper/image_cropper.dart';
 
 class LoginRequest extends StatefulWidget {
   @override
@@ -56,7 +57,7 @@ class _LoginRequestState extends State<LoginRequest> {
         firstDate: DateTime(DateTime.now().year - 100),
         lastDate: DateTime(DateTime.now().year + 100),
         helpText: "Select Your BOD",
-        builder: (context, child) {
+        builder: (context, child){
         return Theme(
           data:ThemeData(primarySwatch: Colors.pink),
           child:child,
@@ -80,18 +81,9 @@ class _LoginRequestState extends State<LoginRequest> {
 
 
 
-  Future getImage() async {
-    final pickedFile = await picker.getImage(source: ImageSource.camera);
-    setState(() {
-      _image = File(pickedFile.path);
-    });
-  }
-  Future getImage2() async {
-    final pickedFile = await picker.getImage(source: ImageSource.gallery);
-    setState(() {
-      _image = File(pickedFile.path);
-    });
-  }
+
+
+
 
   final _formKey = GlobalKey<FormState>();
   final FocusScopeNode _node = FocusScopeNode();
@@ -115,67 +107,43 @@ class _LoginRequestState extends State<LoginRequest> {
               children: <Widget>[
                 Stack(
                   children:<Widget>[
-                    CircleAvatar(
-                      backgroundImage: _image !=null?FileImage(_image):null,
-                      child:_image == null?Center(
-                        child:Icon(Icons.camera_alt,size: 80,),
-                      ):null,
-                      backgroundColor: Colors.black12,
-                      radius:60,
-                    ),
 
-                  ],
-                ),
 
-                SizedBox(
-                  height: MediaQuery.of(context).size.height/40,
-                ),
-
-                PopupMenuButton<int>(
-                  child: Text("Add Photo"),
-                  itemBuilder: (context)=>[
-                    PopupMenuItem(
-                      value: 1,
-                      child:Text("Pick Image From Camera"),
-                    ),
-                    PopupMenuItem(
-                      value: 2,
-                      child:Text("Pick Image From Gallery"),
-                    ),
-                    PopupMenuItem(
-                      value: 3,
-                      child:Center(
-                        child:RaisedButton(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          onPressed:() => Navigator.of(context),
-                        )
+                    GestureDetector(
+                      onTap: (){
+                        _showPickOptionsDialog(context);
+                      },
+                      child: CircleAvatar(
+                        backgroundImage: _image !=null?FileImage(_image):null,
+                        child:_image == null?Center(
+                          child:Icon(Icons.camera_alt,size: 80,),
+                        ):null,
+                        backgroundColor: Colors.black12,
+                        radius:60,
                       ),
+                    ),
 
-                    )
+
+
                   ],
-                  onSelected: (value){
-                    if(value == 1){
-                      getImage();
-                    }
-                    else if(value == 2){
-                      getImage2();
-                    }
-                    else if(value == 3){
-                      Navigator.of(context);
-                    }
-
-                  },
                 ),
-
-
-
 
                 SizedBox(
                   height: MediaQuery.of(context).size.height/40,
                 ),
 
+
+                  GestureDetector(
+                    onTap: (){
+                     // _showPickOptionsDialog(context);
+                    },
+                    child:Text("Add Photos",style: TextStyle(fontSize: 20),),
+                  ),
+
+
+                SizedBox(
+                  height: MediaQuery.of(context).size.height/40,
+                ),
                 Container(
                   width:MediaQuery.of(context).size.width/1.2,
                   child:Form(
@@ -184,11 +152,9 @@ class _LoginRequestState extends State<LoginRequest> {
                       node:_node,
                       child:Column(
                         children: <Widget>[
-
                           SizedBox(
                             height: MediaQuery.of(context).size.height/40,
                           ),
-
                           TextFormField(
                             controller: TF1,
                             textInputAction: TextInputAction.next,
@@ -410,10 +376,11 @@ class _LoginRequestState extends State<LoginRequest> {
                               if(value.isEmpty){
                                 return "Please Enter Your Native City";
                               }
-                              else{
-                                return null;
-                              }
-                            },
+                              else
+                                {
+                                   return null;
+                                }
+                             },
                             onEditingComplete: _node.nextFocus,
                             decoration: InputDecoration(
                               labelText: "Native City",
@@ -466,4 +433,63 @@ class _LoginRequestState extends State<LoginRequest> {
       ) ,
     );
   }
+
+  _loadPicker(ImageSource source) async{
+    File picked = await ImagePicker.pickImage(source: source);
+    if(picked != null){
+      _cropImage(picked);
+    }
+    //Navigator.of(context,rootNavigator:true);
+  }
+
+  _cropImage(File picked)async{
+    File cropped = await ImageCropper.cropImage(
+      androidUiSettings: AndroidUiSettings(
+        statusBarColor: Colors.red,
+        toolbarColor: Colors.red,
+        toolbarTitle: "Crop Image",
+        toolbarWidgetColor: Colors.white,
+      ),
+      sourcePath: picked.path,
+      aspectRatioPresets: [
+        CropAspectRatioPreset.original,
+        CropAspectRatioPreset.ratio16x9,
+        CropAspectRatioPreset.ratio4x3,
+      ],
+      maxWidth: 1000,
+    );
+    if (cropped != null) {
+      setState((){
+        _image = cropped;
+      }
+      );
+    }
+  }
+
+
+  void _showPickOptionsDialog(BuildContext context){
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            ListTile(
+              title: Text("Pick from Gallery"),
+              onTap: () {
+                _loadPicker(ImageSource.gallery);
+              },
+            ),
+            ListTile(
+              title: Text("Take a pictuer"),
+              onTap: () {
+                _loadPicker(ImageSource.camera);
+              },
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
 }

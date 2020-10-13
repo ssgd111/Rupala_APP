@@ -40,7 +40,7 @@ class _ResetPinState extends State<ResetPin>{
                   padding: EdgeInsets.only(left:MediaQuery.of(context).size.width/30),
                   width: MediaQuery.of(context).size.width/1.2,
                   decoration:BoxDecoration(
-                    color: Colors.tealAccent,
+                   // color: Colors.tealAccent,
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: DropdownButton<String>(
@@ -58,7 +58,7 @@ class _ResetPinState extends State<ResetPin>{
                         }
                       );
                     },
-                    items: <String>['One','Two','Three','Four']
+                    items:<String>['One','Two','Three','Four']
                         .map<DropdownMenuItem<String>>((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
@@ -78,7 +78,7 @@ class _ResetPinState extends State<ResetPin>{
                 Container(
                   padding: EdgeInsets.only(left:MediaQuery.of(context).size.width/30),
                   decoration:BoxDecoration(
-                    color: Colors.tealAccent,
+                  //  color: Colors.tealAccent,
                     borderRadius: BorderRadius.circular(10),
                   ),
                   width: MediaQuery.of(context).size.width/1.2,
@@ -115,7 +115,7 @@ class _ResetPinState extends State<ResetPin>{
                 Container(
                   padding: EdgeInsets.only(left:MediaQuery.of(context).size.width/30),
                   decoration:BoxDecoration(
-                    color: Colors.tealAccent,
+                  //  color: Colors.tealAccent,
                     borderRadius: BorderRadius.circular(10),
                   ),
                   width: MediaQuery.of(context).size.width/1.2,
@@ -336,13 +336,9 @@ class _ResetPinState extends State<ResetPin>{
                              ),
                            ],
                          ),
-
                          SizedBox(
                            height: MediaQuery.of(context).size.height/20,
                          ),
-                         
-                         
-
                        ],
                      ),
                    ),

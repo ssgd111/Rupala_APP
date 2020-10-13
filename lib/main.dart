@@ -7,16 +7,24 @@ import 'package:rupala/widgets/themenotifier.dart';
 import 'package:provider/provider.dart';
 
 void main(){
+
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.bottom]).then((_){
-    SharedPreferences.getInstance().then((prefs) {
+    SharedPreferences.getInstance().then((prefs){
       var darkModeOn = prefs.getBool('darkMode') ?? true;
-      runApp(
+
+      SystemChrome.setPreferredOrientations(
+          [
+            DeviceOrientation.portraitUp,
+          ]
+      );
+
+       runApp(
         ChangeNotifierProvider<ThemeNotifier>(
-          create:(_) => ThemeNotifier(darkModeOn ? darkTheme : lightTheme),
-          child: MyApp(),
-        ),
-       );
+           create:(_)=>ThemeNotifier(darkModeOn ? darkTheme : lightTheme),
+           child: MyApp(),
+          ),
+        );
       }
      );
     }
